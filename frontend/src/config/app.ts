@@ -39,6 +39,21 @@ const networkConfig: NetworkConfig = {
       decimals: 18,
     },
   },
+  [Network.Tenderly]: {
+    id: Network.Tenderly,
+    networkId: 3030,
+    chainId: 3030,
+    ref: 'tenderly',
+    name: 'Tenderly',
+    rpcUrl: `https://rpc.tenderly.co/fork/c9cbea21-f1d9-4082-a75d-67d75e346da0`,
+    graphUrl: 'http://localhost:8000/subgraphs/name/thegostep/ampleforth-geyser-v2', // TODO
+    explorerUrl: '',
+    nativeCurrency: {
+      name: 'Ethereum',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+  },
 }
 
 const geyserList: AppGeysersList = {
@@ -98,14 +113,31 @@ const geyserList: AppGeysersList = {
       isWrapped: false,
     },
   ],
+  [Network.Tenderly]: [
+    {
+      name: 'WETH aToken - SEAM',
+      address: '0x2942AAC0Ee36288671eFdB558dAD63ABA99F7eD0',
+      stakingToken: StakingToken.SEAMLESS_ATOKEN,
+      rewardToken: RewardToken.SEAM,
+      isWrapped: true,
+    },
+    {
+      name: 'USDC aToken - SEAM',
+      address: '0xc240964354AC1283e1E518ccF398E603633CCFb8',
+      stakingToken: StakingToken.SEAMLESS_ATOKEN,
+      rewardToken: RewardToken.SEAM,
+      isWrapped: true,
+    }
+  ]
 }
 
 const additionalTokens: AppAdditionalTokensList = {
   [Network.Base]: [],
   [Network.BaseTestNet]: [],
+  [Network.Tenderly]: [],
 }
 
-export const activeNetworks: Network[] = [Network.Base, Network.BaseTestNet] // TODO
+export const activeNetworks: Network[] = [Network.Base, Network.BaseTestNet, Network.Tenderly] // TODO
 
 export function getConnectionConfig(networkId: number | null): ConnectionConfig {
   return networkConfig[networkId as Network] || networkConfig[Network.Base]

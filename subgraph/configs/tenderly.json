@@ -1,0 +1,7 @@
+{
+    "network": "mainnet",
+    "startBlock": 3357230,
+    "geyserRegistry": "0x5780092FcA7BA471Bd58480Ea83A487649C57772",
+    "vaultFactory": "0xa1Ed2275F3a4aB09EFC94B94F50D9e73b22D2e9F",
+    "crucibleFactory": "0x0000000000000000000000000000000000000000"
+}

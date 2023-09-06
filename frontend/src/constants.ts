@@ -65,6 +65,7 @@ export enum RewardToken {
 export enum Network {
   Base = 8453,
   BaseTestNet = 84531,
+  Tenderly = 3030,
 }
 
 // tooltip messages
