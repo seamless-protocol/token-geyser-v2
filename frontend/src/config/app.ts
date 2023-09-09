@@ -118,14 +118,14 @@ const geyserList: AppGeysersList = {
       name: 'WETH aToken - SEAM',
       address: '0x2942AAC0Ee36288671eFdB558dAD63ABA99F7eD0',
       stakingToken: StakingToken.SEAMLESS_ATOKEN,
-      rewardToken: RewardToken.SEAM,
+      rewardToken: RewardToken.OG_POINTS,
       isWrapped: true,
     },
     {
       name: 'USDC aToken - SEAM',
-      address: '0xc240964354AC1283e1E518ccF398E603633CCFb8',
+      address: '0xaf9B41Db8356D1431047d89caEC153398D1d2c99',
       stakingToken: StakingToken.SEAMLESS_ATOKEN,
-      rewardToken: RewardToken.SEAM,
+      rewardToken: RewardToken.OG_POINTS,
       isWrapped: true,
     }
   ]
