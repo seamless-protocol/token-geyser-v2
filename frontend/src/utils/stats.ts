@@ -1,5 +1,5 @@
 import { BigNumber, BigNumberish } from 'ethers'
-import { toChecksumAddress } from 'web3-utils'
+import Web3 from 'web3'
 import { formatUnits } from 'ethers/lib/utils'
 import {
   getGeyserVaultData,
@@ -107,7 +107,7 @@ export const getGeyserStats = async (
             })
           : [],
     }),
-    `${toChecksumAddress(geyser.id)}|stats`,
+    `${Web3.utils.toChecksumAddress(geyser.id)}|stats`,
     GEYSER_STATS_CACHE_TIME_MS,
   )
 
@@ -129,7 +129,7 @@ const getLockStakeUnits = (lock: Lock, timestamp: number) => {
  * Returns the amount of reward token that will be unlocked between now and `end`
  */
 const getPoolDrip = async (geyser: Geyser, end: number, signerOrProvider: SignerOrProvider) => {
-  const geyserAddress = toChecksumAddress(geyser.id)
+  const geyserAddress = Web3.utils.toChecksumAddress(geyser.id)
   return (await getFutureUnlockedRewards(geyserAddress, end, signerOrProvider)).sub(
     await getCurrentUnlockedRewards(geyserAddress, signerOrProvider),
   )
@@ -284,7 +284,7 @@ const getPoolAPY = async (
 
       return outflowWithBonus === 0 ? 0 : calculateAPY(inflow, outflowWithBonus, periods)
     },
-    `${toChecksumAddress(geyser.id)}|poolAPY`,
+    `${Web3.utils.toChecksumAddress(geyser.id)}|poolAPY`,
     GEYSER_STATS_CACHE_TIME_MS,
   )
 
@@ -305,8 +305,8 @@ const getCurrentMultiplier = async (
   signerOrProvider: SignerOrProvider,
 ): Promise<Array<number>> => {
   const { scalingFloor, scalingCeiling, scalingTime } = geyser
-  const geyserAddress = toChecksumAddress(geyser.id)
-  const vaultAddress = toChecksumAddress(vault.id)
+  const geyserAddress = Web3.utils.toChecksumAddress(geyser.id)
+  const vaultAddress = Web3.utils.toChecksumAddress(vault.id)
 
   const now = nowInSeconds()
   const minMultiplier = 1
@@ -343,8 +343,8 @@ export const getUserStats = async (
       apy: await getPoolAPY(geyser, stakingTokenInfo, rewardTokenInfo, bonusTokensInfo, signerOrProvider),
     }
   }
-  const vaultAddress = toChecksumAddress(vault.id)
-  const geyserAddress = toChecksumAddress(geyser.id)
+  const vaultAddress = Web3.utils.toChecksumAddress(vault.id)
+  const geyserAddress = Web3.utils.toChecksumAddress(geyser.id)
   const { decimals: rewardTokenDecimals } = rewardTokenInfo
   const { amount } = lock
   const currentRewards = await getCurrentVaultReward(vaultAddress, geyserAddress, signerOrProvider)
@@ -371,7 +371,7 @@ const getVaultTokenBalance = async (
   vaultAddress: string,
   signerOrProvider: SignerOrProvider,
 ): Promise<VaultTokenBalance> => {
-  const tokenAddress = toChecksumAddress(tokenInfo.address)
+  const tokenAddress = Web3.utils.toChecksumAddress(tokenInfo.address)
   const parsedBalance = await ERC20Balance(tokenAddress, vaultAddress, signerOrProvider)
   const lockedBalance = await getBalanceLocked(vaultAddress, tokenAddress, signerOrProvider)
   const parsedUnlockedBalance = parsedBalance.sub(lockedBalance)
@@ -398,16 +398,18 @@ export const getVaultStats = async (
   signerOrProvider: SignerOrProvider,
 ): Promise<VaultStats> => {
   if (!vault) return defaultVaultStats()
-  const vaultAddress = toChecksumAddress(vault.id)
+  const vaultAddress = Web3.utils.toChecksumAddress(vault.id)
 
-  const addressSet = new Set<string>([stakingTokenInfo.address, rewardTokenInfo.address].map(toChecksumAddress))
+  const addressSet = new Set<string>(
+    [stakingTokenInfo.address, rewardTokenInfo.address].map(Web3.utils.toChecksumAddress),
+  )
   const stakingTokenBalanceInfo = await getVaultTokenBalance(stakingTokenInfo, vaultAddress, signerOrProvider)
   const rewardTokenBalanceInfo = await getVaultTokenBalance(rewardTokenInfo, vaultAddress, signerOrProvider)
 
   const additionalTokenBalances: VaultTokenBalance[] = (
     await Promise.allSettled(
       allTokensInfos
-        .map((tokenInfo) => ({ ...tokenInfo, address: toChecksumAddress(tokenInfo.address) }))
+        .map((tokenInfo) => ({ ...tokenInfo, address: Web3.utils.toChecksumAddress(tokenInfo.address) }))
         .filter(({ address }) => {
           const isDuplicate = addressSet.has(address)
           if (!isDuplicate) addressSet.add(address)

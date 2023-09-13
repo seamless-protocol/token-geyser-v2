@@ -1,4 +1,4 @@
-import { toChecksumAddress } from 'web3-utils'
+import Web3 from 'web3'
 import { ERC20Decimals, ERC20Name, ERC20Symbol } from '../sdk'
 import { SignerOrProvider, TokenInfo } from '../types'
 import * as ls from './cache'
@@ -9,7 +9,7 @@ export const getTokenInfo = async (
   signerOrProvider: SignerOrProvider,
   ttl: number = CONST_CACHE_TIME_MS,
 ): Promise<TokenInfo> => {
-  const address = toChecksumAddress(tokenAddress)
+  const address = Web3.utils.toChecksumAddress(tokenAddress)
   return ls.computeAndCache<TokenInfo>(
     async () => {
       const value: TokenInfo = {
