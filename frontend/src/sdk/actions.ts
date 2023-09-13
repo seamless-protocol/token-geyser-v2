@@ -5,7 +5,7 @@ import { ERC20_ABI } from './abis'
 import { getBalanceLocked, getRewardsClaimedFromUnstake } from './stats'
 import { ERC20Balance } from './tokens'
 import { isPermitable, loadNetworkConfig, signPermission, signPermitEIP2612 } from './utils'
-import Web3 from 'web3'
+import { utils } from 'web3'
 // End to end user flow
 // 1) Create vault: `create()`
 // 2) Depost staking tokens to vault: `deposit()`

@@ -1,6 +1,6 @@
 import { useLazyQuery } from '@apollo/client'
 import { createContext, useContext, useEffect, useState } from 'react'
-import Web3 from 'web3'
+import { utils } from 'web3'
 import { TransactionResponse } from '@ethersproject/providers'
 import { BigNumber, Wallet } from 'ethers'
 import { Geyser, TokenInfo, GeyserConfig, Vault, GeyserInfo, GeyserAction } from 'types'
@@ -129,9 +129,9 @@ export const GeyserContextProvider: React.FC = ({ children }) => {
   }
 
   const selectGeyser = async (geyser: Geyser) => {
-    const geyserAddress = Web3.utils.toChecksumAddress(geyser.id)
+    const geyserAddress = utils.toChecksumAddress(geyser.id)
     const geyserConfigs = getGeysersConfigList(networkId)
-    const geyserConfig = geyserConfigs.find((config) => Web3.utils.toChecksumAddress(config.address) === geyserAddress)
+    const geyserConfig = geyserConfigs.find((config) => utils.toChecksumAddress(config.address) === geyserAddress)
     if (!geyserConfig) {
       throw new Error(`Geyser config not found for geyser at ${geyserAddress}`)
     }
@@ -158,7 +158,7 @@ export const GeyserContextProvider: React.FC = ({ children }) => {
     })
   }
   const selectGeyserById = async (id: string) => {
-    const geyser = geysers.find((g) => Web3.utils.toChecksumAddress(g.id) === Web3.utils.toChecksumAddress(id))
+    const geyser = geysers.find((g) => utils.toChecksumAddress(g.id) === utils.toChecksumAddress(id))
     if (geyser) await selectGeyser(geyser)
   }
   const selectGeyserByName = async (name: string) => {
@@ -168,9 +168,7 @@ export const GeyserContextProvider: React.FC = ({ children }) => {
   }
   const getGeyserName = (id: string) => {
     const geyserConfigs = getGeysersConfigList(networkId)
-    const geyser = geyserConfigs.find(
-      (g) => Web3.utils.toChecksumAddress(g.address) === Web3.utils.toChecksumAddress(id),
-    )
+    const geyser = geyserConfigs.find((g) => utils.toChecksumAddress(g.address) === utils.toChecksumAddress(id))
     return geyser?.name || ''
   }
 
@@ -195,20 +193,20 @@ export const GeyserContextProvider: React.FC = ({ children }) => {
           // staking and reward tokens might have custom logic for name / symbol
           const geyserAddressToConfig = new Map(
             geyserConfigs.map(({ address, stakingToken, rewardToken }) => [
-              Web3.utils.toChecksumAddress(address),
+              utils.toChecksumAddress(address),
               { stakingToken, rewardToken },
             ]),
           )
 
           const geyserTokens = currentGeysers.map(({ id, stakingToken, rewardToken }) => ({
-            ...geyserAddressToConfig.get(Web3.utils.toChecksumAddress(id))!,
+            ...geyserAddressToConfig.get(utils.toChecksumAddress(id))!,
             stakingTokenAddress: stakingToken,
             rewardTokenAddress: rewardToken,
           }))
 
           const geyserTokensSet = new Set(
             currentGeysers.flatMap(({ stakingToken, rewardToken }) =>
-              [stakingToken, rewardToken].map(Web3.utils.toChecksumAddress),
+              [stakingToken, rewardToken].map(utils.toChecksumAddress),
             ),
           )
           const rewardTokens = await Promise.all(
@@ -238,9 +236,7 @@ export const GeyserContextProvider: React.FC = ({ children }) => {
           const additionalTokensInfos = (
             await Promise.allSettled(
               additionalTokens
-                .filter(
-                  ({ enabled, address }) => enabled && !geyserTokensSet.has(Web3.utils.toChecksumAddress(address)),
-                )
+                .filter(({ enabled, address }) => enabled && !geyserTokensSet.has(utils.toChecksumAddress(address)))
                 .map(({ address }) => getTokenInfo(address, signerOrProvider)),
             )
           )

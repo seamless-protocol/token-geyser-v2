@@ -1,7 +1,7 @@
 import { BigNumberish } from 'ethers'
 import { formatUnits } from 'ethers/lib/utils'
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import Web3 from 'web3'
+import { utils } from 'web3'
 import { getCurrentStakeReward } from 'sdk/stats'
 import { GeyserStats, UserStats, VaultStats } from 'types'
 import {
@@ -58,8 +58,8 @@ export const StatsContextProvider: React.FC = ({ children }) => {
     const { geyser: selectedGeyser, rewardTokenInfo } = selectedGeyserInfo
     const { decimals } = rewardTokenInfo
     if (selectedGeyser && selectedVault && signer && decimals) {
-      const vaultAddress = Web3.utils.toChecksumAddress(selectedVault.id)
-      const geyserAddress = Web3.utils.toChecksumAddress(selectedGeyser.id)
+      const vaultAddress = utils.toChecksumAddress(selectedVault.id)
+      const geyserAddress = utils.toChecksumAddress(selectedGeyser.id)
       const computedRewards = await getCurrentStakeReward(vaultAddress, geyserAddress, unstakeAmount, signer)
       return parseFloat(formatUnits(computedRewards, decimals))
     }

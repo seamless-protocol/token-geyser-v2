@@ -1,6 +1,6 @@
 import { BigNumber, Contract } from 'ethers'
 import { formatUnits } from 'ethers/lib/utils'
-import Web3 from 'web3'
+import { utils } from 'web3'
 import { StakingToken } from '../constants'
 import { SignerOrProvider, StakingTokenInfo } from '../types'
 import { WRAPPED_ERC20_ABI } from './abis/WrappedERC20'
@@ -38,7 +38,7 @@ export const getStakingTokenInfo = async (
 const getMockLPToken = async (tokenAddress: string): Promise<StakingTokenInfo> => {
   const price = ((await getCurrentPrice('AMPL')) + (await getCurrentPrice('BAL'))) / 2
   return {
-    address: Web3.utils.toChecksumAddress(tokenAddress),
+    address: utils.toChecksumAddress(tokenAddress),
     name: `MOCK-AMPL-BAL Liquidity Token`,
     symbol: `MOCK-AMPL-BAL`,
     decimals: 18,
@@ -55,7 +55,7 @@ const getAaveV2 = async (
   wrapperTokenAddress: string,
   signerOrProvider: SignerOrProvider,
 ): Promise<StakingTokenInfo> => {
-  const wrapperAddress = Web3.utils.toChecksumAddress(wrapperTokenAddress)
+  const wrapperAddress = utils.toChecksumAddress(wrapperTokenAddress)
   const wrapperContract = new Contract(wrapperAddress, WRAPPED_ERC20_ABI, signerOrProvider)
 
   // aAMPL
@@ -110,7 +110,7 @@ const getAaveV2 = async (
 }
 
 const getBasicToken = async (tokenAddress: string, signerOrProvider: SignerOrProvider): Promise<StakingTokenInfo> => {
-  const address = Web3.utils.toChecksumAddress(tokenAddress)
+  const address = utils.toChecksumAddress(tokenAddress)
   const tokenInfo = await getTokenInfo(address, signerOrProvider)
   const price = await getCurrentPrice(tokenInfo.symbol)
   return {
