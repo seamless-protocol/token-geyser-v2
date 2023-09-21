@@ -175,10 +175,6 @@ const mainnetAdditionalTokens = [
 ]
 ```
 
-## Ethereum Provider
-
-To use Infura as provider, replace the value of `TENDERLY_PROJECT_ID` under `src/constants.ts` with your Infura Project ID. This is only used for mainnet.
-
 ## Stats
 
 User and geyser stats calculations are ported over from V1. The accounting math can be found under `src/utils/stats.ts`.
