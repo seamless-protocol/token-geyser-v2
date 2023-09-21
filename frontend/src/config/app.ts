@@ -1,4 +1,4 @@
-import { Network, StakingToken, RewardToken, TENDERLY_PROJECT_ID, DEFAULT_RPC_ENDPOINT } from '../constants'
+import { Network, StakingToken, RewardToken, DEFAULT_RPC_ENDPOINT } from '../constants'
 import {
   AppGeysersList,
   NetworkConfig,
@@ -30,7 +30,7 @@ const networkConfig: NetworkConfig = {
     chainId: 84531,
     ref: 'base-goerli',
     name: 'Base Goerli',
-    rpcUrl: `https://base-goerli.gateway.tenderly.co/${TENDERLY_PROJECT_ID}`,
+    rpcUrl: 'https://rpc.ankr.com/base_goerli',
     graphUrl: 'https://api.studio.thegraph.com/query/51577/seamless-geyser/version/latest',
     explorerUrl: 'https://goerli.basescan.org/tx',
     nativeCurrency: {
