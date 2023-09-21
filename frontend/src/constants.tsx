@@ -115,8 +115,13 @@ export enum Align {
 // Tenderly
 export const TENDERLY_PROJECT_ID = '1SVyxsO1IHL8NHPgMyQmuF'
 
-export const DEFAULT_RPC_ENDPOINT = `https://rpc.ankr.com/base`
-// const DEFAULT_RPC_ENDPOINT = `https://mainnet.base.org/`
+export const DEFAULT_RPC_ENDPOINT =
+  process.env.NODE_ENV === 'development'
+    ? `https://rpc.ankr.com/base`
+    : 'https://base-mainnet.g.alchemy.com/v2/cmOQkZesrPx6CW_f1TnZWzODwtDIf1f1'
+
+// Other RPC endpoints for reference
+// export const DEFAULT_RPC_ENDPOINT = `https://mainnet.base.org/`
 
 // Enable withdrawing whole unlocked balance of staking tokens when unstaking
 export const WITHDRAW_UNLOCKED_STAKING_TOKENS_WHEN_UNSTAKING = false
