@@ -13,6 +13,7 @@ import { DropdownsContainer } from 'components/DropdownsContainer'
 import { useEffect } from 'react'
 
 import BottomFooter from 'components/BottomFooter'
+import Banner from 'components/Banner'
 
 Sentry.init({
   dsn: 'https://65d10bb3c46af974c9c1c1bba9095149@o4505863051542528.ingest.sentry.io/4505863214465024',
@@ -44,6 +45,7 @@ function App() {
               <WalletContextProvider>
                 <StatsContextProvider>
                   <div className="flex flex-col gap-4">
+                    <Banner />
                     <Header />
                     <DropdownsContainer />
                     <Body />
