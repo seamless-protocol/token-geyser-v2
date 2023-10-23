@@ -46,7 +46,7 @@ const BannerContainer = styled.div`
 `
 
 const TextContainer = styled.div`
-  ${tw`md:text-md text-xs sm:text-sm`}
+  ${tw`text-xs sm:text-sm`}
 `
 
 const CloseImage = styled.img`
