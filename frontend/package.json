@@ -9,14 +9,6 @@
     "@headlessui/react": "^1.4.1",
     "@heroicons/react": "^1.0.4",
     "@sentry/react": "^7.68.0",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^12.0.0",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "@types/styled-components": "^5.1.9",
     "bnc-onboard": "^1.25.0",
     "coingecko-api": "^1.0.10",
     "graphql": "^15.5.0",
@@ -37,7 +29,7 @@
   },
   "scripts": {
     "start": "craco start --openssl-legacy-provider",
-    "build": "craco build --openssl-legacy-provider",
+    "build": "craco build --openssl-legacy-provider --legacy-bundling",
     "test": "craco test",
     "eject": "react-scripts eject",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
@@ -74,9 +66,18 @@
     }
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
     "@types/coingecko-api": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/styled-components": "^5.1.9",
     "autoprefixer": "^9.8.6",
     "eslint": "^7.27.0",
     "eslint-config-airbnb": "^18.2.1",
@@ -89,9 +90,9 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
-    "postcss": "^7.0.35",
+    "postcss": "^8.4.31",
     "prettier": "^2.3.0",
     "react-is": "^17.0.2",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.2"
+    "tailwindcss": "^3.3.3"
   }
 }
