@@ -38,7 +38,7 @@
   },
   "scripts": {
     "start": "craco start --openssl-legacy-provider",
-    "build": "craco build --openssl-legacy-provider",
+    "build": "craco build --openssl-legacy-provider --legacy-bundling",
     "test": "craco test",
     "eject": "react-scripts eject",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",

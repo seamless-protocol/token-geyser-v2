@@ -37,6 +37,7 @@ module.exports = {
       cream: '#F8F0E5',
       lightBlue: '#3AB0FF',
       surface: '#77037B',
+      banner: '#fabc44',
     },
     container: {
       center: true,

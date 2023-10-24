@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import tw from 'twin.macro'
+import close from 'assets/close.svg'
 
 const Banner = () => {
-  const [showBanner, setShowBanner] = useState(false)
+  const [showBanner, setShowBanner] = useState(true)
 
   return (
     <>
@@ -19,14 +20,14 @@ const Banner = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                here
+                <b>here</b>
               </a>
               .
             </p>
           </TextContainer>
-          <button onClick={() => setShowBanner(false)}>
+          <button onClick={() => setShowBanner(false)} type="button">
             <CloseImage
-              src="/assests/close.svg"
+              src={close}
               alt="close banner icon"
               width={20}
               height={20}
@@ -42,11 +43,11 @@ const Banner = () => {
 export default Banner
 
 const BannerContainer = styled.div`
-  ${tw`flex w-full items-center justify-center gap-1 bg-[#FABC45] p-4 text-black sm:p-3`}
+  ${tw`flex w-full items-center justify-center bg-banner text-black sm:p-3 -mb-4`}
 `
 
 const TextContainer = styled.div`
-  ${tw`text-xs sm:text-sm`}
+  ${tw`text-xs sm:text-sm w-3/4 text-center`}
 `
 
 const CloseImage = styled.img`
