@@ -39,7 +39,7 @@ Make sure that the environment variable `NODE_ENV` is set to something other tha
 
 ## Farms Specific Configuration
 
-### List of Farmss
+### List of Farms
 
 Under `src/config/app.ts`, it is possible to add or remove geysers that will be shown in the UI.
 To add a geyser, append an object with the following properties to the `geyserList` object:
