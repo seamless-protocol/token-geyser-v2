@@ -16,6 +16,8 @@ const SYMBOL_TO_QUERY: Record<string, string> = {
   USDC: 'usd-coin',
 
   USDbC: 'bridged-usd-coin-base',
+
+  SEAM: 'seamless-protocol',
 }
 
 export const getCurrentPrice = async (symbol: string) => {

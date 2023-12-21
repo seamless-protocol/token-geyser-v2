@@ -19,7 +19,7 @@ Sentry.init({
   integrations: [
     new Sentry.BrowserTracing({
       // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
-      tracePropagationTargets: ['localhost', /^https:\/\/farms.seamlessprotocol\.com/],
+      tracePropagationTargets: ['localhost:3000', /^https:\/\/farms.seamlessprotocol\.com/],
     }),
     new Sentry.Replay(),
   ],

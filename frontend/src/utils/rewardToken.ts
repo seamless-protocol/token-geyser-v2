@@ -16,6 +16,8 @@ export const getRewardTokenInfo = async (
   signerOrProvider: SignerOrProvider,
 ) => {
   switch (token) {
+    case RewardToken.SEAM:
+      return getBasicToken(tokenAddress, signerOrProvider)
     case RewardToken.MOCK:
       return getBasicToken(tokenAddress, signerOrProvider)
     case RewardToken.OG_POINTS:

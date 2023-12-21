@@ -41,6 +41,7 @@ export enum TxState {
 
 // Staking tokens
 export enum StakingToken {
+  UNISWAP_V2,
   // for testing
   MOCK,
   WAMPL,
@@ -54,6 +55,7 @@ export enum StakingToken {
 
 // Reward tokens
 export enum RewardToken {
+  SEAM,
   // for testing
   MOCK,
 
