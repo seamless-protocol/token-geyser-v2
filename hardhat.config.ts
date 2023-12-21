@@ -473,10 +473,7 @@ task('get-owners', 'gets the owner of the given contract')
       '@openzeppelin/contracts/access/Ownable.sol:Ownable',
       await geyserContract.getPowerSwitch(),
     )
-    const proxyAdmin = await ethers.getContractAt(
-      '@openzeppelin/contracts/access/Ownable.sol:Ownable',
-      proxyadmin,
-    )
+    const proxyAdmin = await ethers.getContractAt('@openzeppelin/contracts/access/Ownable.sol:Ownable', proxyadmin)
 
     const powerSwitchOwner = await powerSwitch.owner()
     console.log(`powerSwitchOwner: ${powerSwitchOwner}`)
