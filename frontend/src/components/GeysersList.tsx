@@ -17,18 +17,22 @@ export const GeysersList = () => {
   const optgroups = (() => {
     const activeGeysers = geysers.filter((g) => g.active === true).map(({ id }) => getGeyserName(id))
     const inactiveGeysers = geysers.filter((g) => !(g.active === true)).map(({ id }) => getGeyserName(id))
-    const farms = [
-      {
-        group: '1',
-        options: activeGeysers,
-      },
-    ]
+    const farms = [];
 
-    if (inactiveGeysers.length > 0)
+    if (activeGeysers.length > 0) {
       farms.push({
-        group: '2',
+        group: 'Active Geysers',
+        options: activeGeysers,
+      })
+    }
+
+    if (inactiveGeysers.length > 0) {
+      farms.push({
+        group: 'Inactive Geysers',
         options: inactiveGeysers,
       })
+    }
+      
     return farms
   })()
 
