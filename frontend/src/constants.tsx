@@ -42,6 +42,10 @@ export enum TxState {
 // Staking tokens
 export enum StakingToken {
   UNISWAP_V2,
+  BALANCER_V1,
+  BALANCER_SMART_POOL_V1,
+  BALANCER_WEIGHTED_POOL_V2,
+
   // for testing
   MOCK,
   WAMPL,

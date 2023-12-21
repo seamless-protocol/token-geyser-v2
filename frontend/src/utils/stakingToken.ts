@@ -4,7 +4,7 @@ import { toChecksumAddress } from 'web3-utils'
 import { StakingToken } from '../constants'
 import { WRAPPED_ERC20_ABI } from './abis/WrappedERC20'
 import { AAVEV2_DEPOSIT_TOKEN } from './abis/AaveV2DepositToken'
-import { getCurrentPrice } from './price'
+import { getCurrentPrice, SYMBOL_TO_QUERY } from './price'
 import { defaultTokenInfo, getTokenInfo } from './token'
 import { UNISWAP_V2_PAIR_ABI } from './abis/UniswapV2Pair'
 import { SignerOrProvider, StakingTokenInfo, TokenComposition } from '../types'
@@ -90,10 +90,12 @@ const uniswapV2Pair = async (
   const totalSupply: BigNumber = await contract.totalSupply()
   const totalSupplyNumber = parseFloat(formatUnits(totalSupply, decimals))
 
-  const tokenCompositions = await getTokenCompositions([token0Address, token1Address], address, signerOrProvider, [
-    0.5,
-    0.5,
-  ])
+  const tokenCompositions = await getTokenCompositions(
+    [token0Address, token1Address],
+    address,
+    signerOrProvider,
+    [0.5, 0.5],
+  )
   const [token0Symbol, token1Symbol] = tokenCompositions.map((c) => c.symbol)
   const marketCap = getMarketCap(tokenCompositions)
 
@@ -332,9 +334,10 @@ const getTokenCompositionsWithBalances = async (
 }
 
 const getTokenPrice = async (symbol: string, tokenAddress: string, signerOrProvider: SignerOrProvider) => {
-  try {
-    return await getCurrentPrice(symbol)
-  } catch (e) {
+  if (SYMBOL_TO_QUERY[symbol]) {
+    const price = await getCurrentPrice(symbol)
+    return price
+  } else {
     const { price } = await uniswapV2Pair(tokenAddress, signerOrProvider, 'UniswapV2', 'UNI')
     return price
   }
