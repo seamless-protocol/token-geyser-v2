@@ -63,7 +63,7 @@ const geyserList: AppGeysersList = {
       stakingToken: StakingToken.UNISWAP_V2,
       rewardToken: RewardToken.SEAM,
       isWrapped: false,
-      poolAddress: 'https://basescan.org/address/0x11e438b489e9e97e0252acd83aaa0a57ab611911'
+      poolAddress: 'https://basescan.org/address/0x11e438b489e9e97e0252acd83aaa0a57ab611911',
     },
     {
       name: 'Staking Farm for Sushiswap SEAM / WETH',
@@ -71,7 +71,7 @@ const geyserList: AppGeysersList = {
       stakingToken: StakingToken.UNISWAP_V2,
       rewardToken: RewardToken.SEAM,
       isWrapped: false,
-      poolAddress: 'https://basescan.org/address/0x54cd16e80d9c2b553701463f1b70626202b0ad9f'
+      poolAddress: 'https://basescan.org/address/0x54cd16e80d9c2b553701463f1b70626202b0ad9f',
     },
     // TODO
     // {
