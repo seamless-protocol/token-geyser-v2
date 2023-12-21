@@ -66,7 +66,7 @@ const geyserList: AppGeysersList = {
       poolAddress: 'https://basescan.org/address/0x11e438b489e9e97e0252acd83aaa0a57ab611911',
     },
     {
-      name: 'Staking Farm for Sushiswap SEAM / WETH',
+      name: 'Staking Farm for SushiSwap SEAM / WETH',
       address: 'TODO',
       stakingToken: StakingToken.UNISWAP_V2,
       rewardToken: RewardToken.SEAM,
