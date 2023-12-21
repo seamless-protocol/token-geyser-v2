@@ -2,11 +2,13 @@ import { BigNumber, Contract } from 'ethers'
 import { formatUnits } from 'ethers/lib/utils'
 import { toChecksumAddress } from 'web3-utils'
 import { StakingToken } from '../constants'
-import { SignerOrProvider, StakingTokenInfo } from '../types'
 import { WRAPPED_ERC20_ABI } from './abis/WrappedERC20'
 import { AAVEV2_DEPOSIT_TOKEN } from './abis/AaveV2DepositToken'
 import { getCurrentPrice } from './price'
 import { defaultTokenInfo, getTokenInfo } from './token'
+import { UNISWAP_V2_PAIR_ABI } from './abis/UniswapV2Pair'
+import { SignerOrProvider, StakingTokenInfo, TokenComposition } from '../types'
+import { ERC20Balance } from '../sdk'
 
 export const defaultStakingTokenInfo = (): StakingTokenInfo => ({
   ...defaultTokenInfo(),
@@ -21,6 +23,8 @@ export const getStakingTokenInfo = async (
   signerOrProvider: SignerOrProvider,
 ): Promise<StakingTokenInfo> => {
   switch (token) {
+    case StakingToken.UNISWAP_V2:
+      return getUniswapV2(tokenAddress, signerOrProvider)
     case StakingToken.MOCK:
       return getMockLPToken(tokenAddress)
     case StakingToken.WAMPL:
@@ -34,6 +38,70 @@ export const getStakingTokenInfo = async (
       throw new Error(`Handler for ${token} not found`)
   }
 }
+
+const getTokenCompositions = async (
+  tokenAddresses: string[],
+  poolAddress: string,
+  signerOrProvider: SignerOrProvider,
+  weights: number[],
+): Promise<TokenComposition[]> => {
+  const compositions = tokenAddresses.map(async (tokenAddress, index) => {
+    const { name, symbol, decimals } = await getTokenInfo(tokenAddress, signerOrProvider)
+    const price = await getCurrentPrice(symbol)
+    const balance = await ERC20Balance(tokenAddress, poolAddress, signerOrProvider)
+    const balanceNumber = parseInt(formatUnits(balance as BigNumber, decimals), 10)
+    return {
+      address: tokenAddress,
+      name,
+      symbol,
+      balance: balanceNumber,
+      decimals,
+      value: price * balanceNumber,
+      weight: weights[index],
+    }
+  })
+  return Promise.all(compositions)
+}
+
+const getMarketCap = (composition: TokenComposition[]) => composition.reduce((m, c) => m + c.value, 0)
+
+const uniswapV2Pair = async (
+  tokenAddress: string,
+  signerOrProvider: SignerOrProvider,
+  namePrefix: string,
+  symbolPrefix: string,
+): Promise<StakingTokenInfo> => {
+  const address = toChecksumAddress(tokenAddress)
+  const contract = new Contract(address, UNISWAP_V2_PAIR_ABI, signerOrProvider)
+  const token0Address: string = await contract.token0()
+  const token1Address: string = await contract.token1()
+  const decimals: number = await contract.decimals()
+
+  const totalSupply: BigNumber = await contract.totalSupply()
+  const totalSupplyNumber = parseFloat(formatUnits(totalSupply, decimals))
+
+  const tokenCompositions = await getTokenCompositions(
+    [token0Address, token1Address],
+    address,
+    signerOrProvider,
+    [0.5, 0.5],
+  )
+  const [token0Symbol, token1Symbol] = tokenCompositions.map((c) => c.symbol)
+  const marketCap = getMarketCap(tokenCompositions)
+
+  return {
+    address: toChecksumAddress(tokenAddress),
+    name: `${namePrefix}-${token0Symbol}-${token1Symbol} Liquidity Token`,
+    symbol: `${symbolPrefix}-${token0Symbol}-${token1Symbol}-V2`,
+    decimals,
+    price: marketCap / totalSupplyNumber,
+    composition: tokenCompositions,
+    wrappedToken: null,
+  }
+}
+
+const getUniswapV2 = async (tokenAddress: string, signerOrProvider: SignerOrProvider) =>
+  uniswapV2Pair(tokenAddress, signerOrProvider, 'UniswapV2', 'UNI')
 
 const getMockLPToken = async (tokenAddress: string): Promise<StakingTokenInfo> => {
   const price = ((await getCurrentPrice('AMPL')) + (await getCurrentPrice('BAL'))) / 2
