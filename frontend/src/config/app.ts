@@ -57,6 +57,22 @@ const geyserList: AppGeysersList = {
       rewardToken: RewardToken.OG_POINTS,
       isWrapped: true,
     },
+    {
+      name: 'Staking Farm for Soswap SEAM / USDC',
+      address: 'TODO',
+      stakingToken: StakingToken.UNISWAP_V2,
+      rewardToken: RewardToken.SEAM,
+      isWrapped: false,
+      poolAddress: 'https://basescan.org/address/0x11e438b489e9e97e0252acd83aaa0a57ab611911'
+    },
+    {
+      name: 'Staking Farm for Sushiswap SEAM / WETH',
+      address: 'TODO',
+      stakingToken: StakingToken.UNISWAP_V2,
+      rewardToken: RewardToken.SEAM,
+      isWrapped: false,
+      poolAddress: 'https://basescan.org/address/0x54cd16e80d9c2b553701463f1b70626202b0ad9f'
+    },
     // TODO
     // {
     //   name: 'ETH Beehive V7 (UniswapV2 ETH-AMPL)',
