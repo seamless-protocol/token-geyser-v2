@@ -16,7 +16,7 @@ const networkConfig: NetworkConfig = {
     ref: 'base',
     name: 'Base',
     rpcUrl: DEFAULT_RPC_ENDPOINT,
-    graphUrl: 'https://api.studio.thegraph.com/query/52170/seamless-farms/version/latest',
+    graphUrl: 'https://subgraph.satsuma-prod.com/cb8cc6f077f3/wesleys-team/seamless-farms/api',
     explorerUrl: 'https://basescan.org/tx',
     nativeCurrency: {
       name: 'Ethereum',
