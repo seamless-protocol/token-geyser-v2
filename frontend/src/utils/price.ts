@@ -10,7 +10,7 @@ const DEFAULT_PRICES: Record<string, number> = {
   USDbC: 1,
 }
 
-const SYMBOL_TO_QUERY: Record<string, string> = {
+export const SYMBOL_TO_QUERY: Record<string, string> = {
   WETH: 'ethereum',
 
   USDC: 'usd-coin',
