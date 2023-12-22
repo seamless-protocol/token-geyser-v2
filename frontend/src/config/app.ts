@@ -44,18 +44,37 @@ const networkConfig: NetworkConfig = {
 const geyserList: AppGeysersList = {
   [Network.Base]: [
     {
-      name: 'Staking Farm for ETH Suppliers',
+      name: '[For withdraw only] ETH Suppliers',
       address: '0x9f5AF07189B4aE59845D36a2b0562478870fa915',
       stakingToken: StakingToken.SEAMLESS_ATOKEN,
       rewardToken: RewardToken.OG_POINTS,
       isWrapped: true,
     },
     {
-      name: 'Staking Farm for USDbC Suppliers',
+      name: '[For withdraw only] USDbC Suppliers',
       address: '0xac42efBd7A86464Ff2B9d3C2FBdc622A77c7B3EC',
       stakingToken: StakingToken.SEAMLESS_ATOKEN,
       rewardToken: RewardToken.OG_POINTS,
       isWrapped: true,
+    },
+    {
+      name: 'SEAM Farm 1: Soswap SEAM/USDC LP',
+      address: '0x0324c763deB573B4cb7D7236d63937Cc276c1df7',
+      stakingToken: StakingToken.SO_SWAP,
+      rewardToken: RewardToken.SEAM,
+      isWrapped: false,
+      poolAddress:
+        'https://soswap.rai.finance/#/add/0x1C7a460413dD4e964f96D8dFC56E7223cE88CD85/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+      // Staked pool token: https://basescan.org/address/0x11e438b489e9e97e0252acd83aaa0a57ab611911
+    },
+    {
+      name: 'SEAM Farm 2: SushiSwap SEAM/WETH LP',
+      address: '0x6C6515133125C38675CE0126E9fc75382410AeB8',
+      stakingToken: StakingToken.SUSHI_SWAP,
+      rewardToken: RewardToken.SEAM,
+      isWrapped: false,
+      poolAddress: 'https://www.sushi.com/pool/8453%3A0x54cd16e80d9c2b553701463f1b70626202b0ad9f',
+      // Staked pool token: https://basescan.org/address/0x54cd16e80d9c2b553701463f1b70626202b0ad9f
     },
     // TODO
     // {

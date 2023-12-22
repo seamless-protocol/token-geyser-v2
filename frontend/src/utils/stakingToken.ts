@@ -25,6 +25,10 @@ export const getStakingTokenInfo = async (
   switch (token) {
     case StakingToken.UNISWAP_V2:
       return getUniswapV2(tokenAddress, signerOrProvider)
+    case StakingToken.SUSHI_SWAP:
+      return getSushiswap(tokenAddress, signerOrProvider)
+    case StakingToken.SO_SWAP:
+      return getSoswap(tokenAddress, signerOrProvider)
     case StakingToken.MOCK:
       return getMockLPToken(tokenAddress)
     case StakingToken.WAMPL:
@@ -90,7 +94,7 @@ const uniswapV2Pair = async (
   return {
     address: toChecksumAddress(tokenAddress),
     name: `${namePrefix}-${token0Symbol}-${token1Symbol} Liquidity Token`,
-    symbol: `${symbolPrefix}-${token0Symbol}-${token1Symbol}-V2`,
+    symbol: `${symbolPrefix}-${token0Symbol}-${token1Symbol}-LP`,
     decimals,
     price: marketCap / totalSupplyNumber,
     composition: tokenCompositions,
@@ -100,6 +104,12 @@ const uniswapV2Pair = async (
 
 const getUniswapV2 = async (tokenAddress: string, signerOrProvider: SignerOrProvider) =>
   uniswapV2Pair(tokenAddress, signerOrProvider, 'UniswapV2', 'UNI')
+
+const getSushiswap = async (tokenAddress: string, signerOrProvider: SignerOrProvider) =>
+  uniswapV2Pair(tokenAddress, signerOrProvider, 'Sushiswap', 'SUSHI')
+
+const getSoswap = async (tokenAddress: string, signerOrProvider: SignerOrProvider) =>
+  uniswapV2Pair(tokenAddress, signerOrProvider, 'Soswap', 'SO')
 
 const getMockLPToken = async (tokenAddress: string): Promise<StakingTokenInfo> => {
   const price = ((await getCurrentPrice('AMPL')) + (await getCurrentPrice('BAL'))) / 2
