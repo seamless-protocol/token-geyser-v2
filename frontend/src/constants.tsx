@@ -42,6 +42,8 @@ export enum TxState {
 // Staking tokens
 export enum StakingToken {
   UNISWAP_V2,
+  SUSHI_SWAP,
+  SO_SWAP,
   // for testing
   MOCK,
   WAMPL,
