@@ -335,10 +335,16 @@ const getTokenCompositionsWithBalances = async (
 
 const getTokenPrice = async (symbol: string, tokenAddress: string, signerOrProvider: SignerOrProvider) => {
   if (SYMBOL_TO_QUERY[symbol]) {
-    const price = await getCurrentPrice(symbol)
-    return price
-  } else {
-    const { price } = await uniswapV2Pair(tokenAddress, signerOrProvider, 'UniswapV2', 'UNI')
-    return price
+    return getCurrentPrice(symbol)
   }
+
+  // If it is sToken, get the underlying token price
+  const unwrappedSymbol = symbol.substring(1)
+  if (SYMBOL_TO_QUERY[unwrappedSymbol]) {
+    return getCurrentPrice(unwrappedSymbol)
+  }
+
+  // If it is not basic token or sToken then it is a LP token
+  const { price } = await uniswapV2Pair(tokenAddress, signerOrProvider, 'UniswapV2', 'UNI')
+  return price
 }
