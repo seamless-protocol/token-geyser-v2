@@ -37,7 +37,7 @@ const FOOTER_ICONS = [
     title: 'Telegram',
   },
   {
-    href: 'https://discord.gg/urQPJu3CKt',
+    href: 'https://discord.com/invite/Uye9jCVgUp',
     icon: 'discord.svg',
     title: 'Discord',
   },
